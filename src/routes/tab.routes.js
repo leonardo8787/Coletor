@@ -9,9 +9,10 @@ import { Size28 } from '../constants/scales'
 const Tab = createBottomTabNavigator();
 
 import { Home }   from "../screens/home"
-import { MapaScreen } from "../screens/mapa";
 import { Profile } from "../screens/profile"
 import { ChatScreen } from "../screens/chat";
+import { NotificacoesScreen } from "../screens/notificacoes";
+import { Mapa } from "../screens/mapa";
 
 function TabsRoutes() {
   return (
@@ -40,13 +41,21 @@ function TabsRoutes() {
         }}
       />  
       <Tab.Screen 
-        name="Mapa" 
-        component={MapaScreen} 
+        name="Notificacoes" 
+        component={NotificacoesScreen} 
         options={{
-          title: "Mapa",
-          tabBarIcon: ({ color }) => ( <SimpleIcon name="google-maps" color={color}  size={Size28} />),
+          title: "Notificacoes",
+          tabBarIcon: ({ color }) => ( <SimpleIcon name="bell" color={color}  size={Size28} />),
         }}
       />  
+      <Tab.Screen 
+        name="Mapa" 
+        component={Mapa} 
+        options={{
+          title: "Mapa",
+          tabBarIcon: ({ color }) => ( <SimpleIcon name="chat" color={color}  size={Size28} />),
+        }}
+      /> 
       <Tab.Screen 
         name="Chat" 
         component={ChatScreen} 

@@ -1,25 +1,28 @@
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { TouchableOpacity, Image } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 
-// import { Home } from '../screens/home';
-// import { Collection } from '../screens/collection';
-// import { Collection2 } from '../screens/collection/index2';
-// import { Collection3 } from '../screens/collection/index3';
-// import { Collection4 } from '../screens/collection/index4';
+const Stack = createNativeStackNavigator();
 
-// const Stack = createNativeStackNavigator();
+import { Home } from '../screens/home';
+import { Mapa } from '../screens/mapa';
 
-// function StackCollection() {
-//   return (
-//     <Stack.Navigator initialRouteName='Home'>
-//         <Stack.Screen 
-//           name="Home" 
-//           component={Home} 
-//           options={{ headerShown: false }}
-//         />
-//     </Stack.Navigator>
-//   );
-// }
+function StackCollection() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Home'>
+        <Stack.Screen 
+          name="Home" 
+          component={Home} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="Mapa" 
+          component={Mapa} 
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
-// export {StackCollection};
+export { StackCollection };
