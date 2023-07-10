@@ -1,7 +1,7 @@
 import {Statistic} from "./statistic";
 
 const Coletor = {
-    email:      "",
+    email:      "Coletorleo@coletor.com",
     name:       null,    
     phone:      null,
     photoUrl:   null,

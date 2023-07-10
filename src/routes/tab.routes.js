@@ -12,7 +12,7 @@ import { Home }   from "../screens/home"
 import { Profile } from "../screens/profile"
 import { ChatScreen } from "../screens/chat";
 import { NotificacoesScreen } from "../screens/notificacoes";
-import { Mapa } from "../screens/mapa";
+import { Map } from "../screens/map";
 
 function TabsRoutes() {
   return (
@@ -50,7 +50,7 @@ function TabsRoutes() {
       />  
       <Tab.Screen 
         name="Mapa" 
-        component={Mapa} 
+        component={Map} 
         options={{
           title: "Mapa",
           tabBarIcon: ({ color }) => ( <SimpleIcon name="chat" color={color}  size={Size28} />),

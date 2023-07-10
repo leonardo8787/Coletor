@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 const Stack = createNativeStackNavigator();
 
 import { Home } from '../screens/home';
-import { Mapa } from '../screens/mapa';
+import { Mapa } from '../screens/map';
 
 function StackCollection() {
   return (
