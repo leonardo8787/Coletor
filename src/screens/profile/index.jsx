@@ -47,7 +47,7 @@ export function Profile() {
       ? {uri: coletorState.photoUrl} 
       : basedImage);
   },[coletorState.photoUrl]);
-   
+
   // Image Profile functions
   async function changeProfileImage(){
     let result = await ImagePicker.launchImageLibraryAsync({
