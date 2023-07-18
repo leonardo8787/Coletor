@@ -40,20 +40,20 @@ function TabsRoutes() {
           tabBarIcon: ({ color }) => ( <SimpleIcon name="recycle" color={color}  size={Size28} />),
         }}
       />  
-      <Tab.Screen 
+      {/* <Tab.Screen 
         name="Notificacoes" 
         component={NotificacoesScreen} 
         options={{
           title: "Notificacoes",
           tabBarIcon: ({ color }) => ( <SimpleIcon name="bell" color={color}  size={Size28} />),
         }}
-      />  
+      />   */}
       <Tab.Screen 
         name="Mapa" 
         component={Map} 
         options={{
           title: "Mapa",
-          tabBarIcon: ({ color }) => ( <SimpleIcon name="chat" color={color}  size={Size28} />),
+          tabBarIcon: ({ color }) => ( <SimpleIcon name="road" color={color}  size={Size28} />),
         }}
       /> 
       <Tab.Screen 
