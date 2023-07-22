@@ -5,7 +5,8 @@ export const firebaseConfig = {
   storageBucket: "reciclaplusnew.appspot.com",
   messagingSenderId: "834087762330",
   appId: "1:834087762330:web:d004eae0ca3b40f3afe223",
-  measurementId: "G-4N1VQJNTYK"
+  measurementId: "G-4N1VQJNTYK",
+  databaseURL: "https://reciclaplusnew-default-rtdb.firebaseio.com/"
 };
 
 export const expoConfig = {
