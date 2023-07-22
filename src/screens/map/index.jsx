@@ -5,7 +5,11 @@ import { styles, customMapStyle } from './style';
 import * as Location from 'expo-location';
 import { SimpleIcon } from '../../components/icons';
 import { Colors, Theme } from '../../constants/setting';
+import { RecyclableCard } from './components/recyclable_card';
 import { GetRecyclable } from "../../firebase/providers/recyclable"
+import { Loading } from '../../components/loading';
+import { Error } from '../../components/error';
+import { ButtonIcon } from '../../components/buttons';
 
 function Map() {
 
@@ -16,8 +20,13 @@ function Map() {
     longitudeDelta: 0.0121
   });
 
-  const [recyclable, setRecyclable] = useState({});
-
+  const [recyclable, setRecyclable]               = useState({});
+  const [error, setError]                         = useState(false);
+  const [addRecyclable, setAddRecyclable]         = useState(false);
+  const [listRecyclable, setListRecyclable]       = useState(false);
+  const [currentRecyclable, setCurrentRecyclable] = useState({});
+  const [loading, setLoading]                     = useState(false);
+  
   const userLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
@@ -43,9 +52,18 @@ function Map() {
     console.log(recyclable);
   }, [recyclable]);
 
+  useEffect(() => {
+    //setAddRecyclable(true);
+  }, [addRecyclable]);
+
 
   return (
-      <View style={styles.container}>
+    <View style={styles.container}>
+
+        {loading && <Loading />}
+        {error && <Error error={error} closeFunc={()=>setError(false)}/>}
+        {addRecyclable && <RecyclableCard data={currentRecyclable} closeCard={()=>setAddRecyclable(false)} setloading={(val)=>setLoading(val)}/>}
+
         <MapView 
           style={styles.map} 
           region={location}
@@ -74,6 +92,21 @@ function Map() {
                 <Marker
                   coordinate={{latitude: item["address"].latitude, longitude: item["address"].longitude}}
                   key={index}
+                  onPress={()=>{
+                    if(item["status"] == "pending"){
+                      setCurrentRecyclable({
+                        id: index,
+                        ...item
+                      });
+                      setAddRecyclable(true);
+                    }else{
+                      setError({
+                        title: "Indisponível",
+                        content: "Esta coleta já foi selecionada por outro coletor."
+                      });
+                    }
+                    
+                  }}
                 >
                   <SimpleIcon 
                     name={item["status"] == "pending" ? 'map-marker-account' : 'map-marker-alert'} 
@@ -86,6 +119,14 @@ function Map() {
           }
         </MapView>
         
+        <View style={styles.floatButton}>
+          <ButtonIcon
+            btn={true} 
+            name={"menu"}
+            size={35}
+            color={Colors[Theme][4]}
+          />
+        </View>
       </View>
   );
 }

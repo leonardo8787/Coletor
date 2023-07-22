@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Theme, Colors } from '../../constants/setting';
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,6 +9,17 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  floatButton: {
+    position: 'absolute',
+    backgroundColor: Colors[Theme][0],
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+    paddingLeft: 20,
+    paddingRight: 10,
+    paddingVertical:5,
+    top: 40,
+    left: 0,
+  }
 });
 
 export const customMapStyle = [

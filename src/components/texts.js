@@ -8,9 +8,9 @@ export const TextSimple = ({content}) => {
         <Text style={Style.textSimple}>{content}</Text>
     );
 }
-export const TextBold = ({content}) => {
+export const TextBold = ({content, size = Size20*0.8}) => {
     return (
-        <Text style={Style.textBold}>{content}</Text>
+        <Text style={{...Style.textBold, fontSize: size}}>{content}</Text>
     );
 }
 export const TextSimpleOpposite = ({
@@ -53,7 +53,6 @@ const Style = StyleSheet.create({
     },
     textBold : {
         color: Colors[Theme][5],
-        fontSize: Size20*0.8,
         ...FontBold
     },
     textIcon : {
