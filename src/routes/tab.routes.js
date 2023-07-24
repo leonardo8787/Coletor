@@ -1,7 +1,5 @@
 import * as React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import { SimpleIcon } from '../components/icons'
 import { Colors,Theme } from '../constants/setting'
 import { Size28 } from '../constants/scales'
@@ -10,9 +8,8 @@ const Tab = createBottomTabNavigator();
 
 import { Home }   from "../screens/home"
 import { Profile } from "../screens/profile"
-import { ChatScreen } from "../screens/chat";
-import { NotificacoesScreen } from "../screens/notificacoes";
 import { Map } from "../screens/map";
+import { ChatScreen } from "../screens/chat";
 
 function TabsRoutes() {
   return (
@@ -40,14 +37,6 @@ function TabsRoutes() {
           tabBarIcon: ({ color }) => ( <SimpleIcon name="recycle" color={color}  size={Size28} />),
         }}
       />  
-      {/* <Tab.Screen 
-        name="Notificacoes" 
-        component={NotificacoesScreen} 
-        options={{
-          title: "Notificacoes",
-          tabBarIcon: ({ color }) => ( <SimpleIcon name="bell" color={color}  size={Size28} />),
-        }}
-      />   */}
       <Tab.Screen 
         name="Mapa" 
         component={Map} 
