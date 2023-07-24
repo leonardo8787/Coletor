@@ -52,7 +52,7 @@ export function ChatScreen() {
     const newMessage = {
       text: message,
       senderId: user,
-      recipientId: 'SkRfYjQdLsYhZydlXjXkKuKjzzm2',
+      recipientId: '5fIkyWhXvJVF15w2GlhYJMDiIY43',
       timestamp: Timestamp.fromDate(new Date()), 
     };
 

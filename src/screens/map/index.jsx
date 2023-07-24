@@ -10,6 +10,7 @@ import { GetRecyclable } from "../../firebase/providers/recyclable"
 import { Loading } from '../../components/loading';
 import { Error } from '../../components/error';
 import { ButtonIcon } from '../../components/buttons';
+import { RecyclableList } from './components/recyclable_list';
 
 function Map() {
 
@@ -62,7 +63,8 @@ function Map() {
 
         {loading && <Loading />}
         {error && <Error error={error} closeFunc={()=>setError(false)}/>}
-        {addRecyclable && <RecyclableCard data={currentRecyclable} closeCard={()=>setAddRecyclable(false)} setloading={(val)=>setLoading(val)}/>}
+        {addRecyclable && <RecyclableCard data={currentRecyclable} closeCard={()=>setAddRecyclable(false)} setloading={(val = true)=>setLoading(val)}/>}
+        {listRecyclable && <RecyclableList datas={recyclable} closeList={()=>setListRecyclable(false)} setloading={(val = true)=>setLoading(val)}/>}
 
         <MapView 
           style={styles.map} 
@@ -125,6 +127,7 @@ function Map() {
             name={"menu"}
             size={35}
             color={Colors[Theme][4]}
+            fun={()=>setListRecyclable(true)}
           />
         </View>
       </View>
