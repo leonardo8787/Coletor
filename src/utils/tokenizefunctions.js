@@ -16,3 +16,16 @@ export const TokenizarStringEmIntervalos = (str) => {
 
     return intervalos;
 }
+
+export const TokenizaConverterParaKg = (str) => {
+    const partes = str.split(' '); // Dividir a string em partes separadas pelo espaço
+    const valor = Number(partes[0]); // Extrair o valor numérico
+  
+    if (partes[1] && partes[1].toLowerCase() === 'g') {
+      // Se a segunda parte for 'g', converter para Kg
+      return valor / 1000;
+    } else {
+      // Caso contrário, assumir que já está em Kg
+      return valor;
+    }
+  }

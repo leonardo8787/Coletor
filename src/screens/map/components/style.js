@@ -30,8 +30,7 @@ export const Styles = StyleSheet.create({
     card: {
         position: "absolute",
         elevation: 1,
-        width: "80%",
-        //height: Height * 0.4,
+        width: "90%",
         backgroundColor: Colors[Theme][1],
         alignSelf: "center",
         borderRadius: 10,
