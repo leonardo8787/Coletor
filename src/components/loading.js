@@ -19,7 +19,7 @@ const Style = StyleSheet.create({
         bottom: 0,
         position: "absolute",
         elevation: 1,
-        zIndex: 3,
+        zIndex: 8,
         backgroundColor: Colors[Theme][4],
         opacity: 0.5,
         alignItems:"center",

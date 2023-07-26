@@ -38,7 +38,7 @@ const Style = StyleSheet.create({
         bottom: 0,
         position: "absolute",
         elevation: 1,
-        zIndex: 1,
+        zIndex: 5,
         justifyContent: "center"
     },
 
@@ -51,7 +51,7 @@ const Style = StyleSheet.create({
     subcontainer:{
         position: "absolute",
         elevation: 1,
-        zIndex: 1,
+        zIndex: 5,
         width: Width*0.9,
         //height: Height * 0.4,
         backgroundColor: Colors[Theme][1],

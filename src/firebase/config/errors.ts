@@ -173,6 +173,6 @@ export function VerifyErroCode(errorCode: string): string {
         case 'auth/internal-error':
             return 'O servidor de autenticação encontrou um erro inesperado ao tentar processar a solicitação.';
         default:
-            return errorCode;
+            return `${errorCode} - Algo deu errado, verifique seu acesso a internet!`;
     }
 }

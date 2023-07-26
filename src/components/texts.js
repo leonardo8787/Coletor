@@ -3,9 +3,9 @@ import { Colors, Theme } from "../constants/setting";
 import { Size20, FontRegular, FontBold } from "../constants/scales";
 import { SimpleIcon } from "./icons";
 
-export const TextSimple = ({content}) => {
+export const TextSimple = ({content, size = Size20}) => {
     return (
-        <Text style={Style.textSimple}>{content}</Text>
+        <Text style={{...Style.textSimple, fontSize: size}}>{content}</Text>
     );
 }
 export const TextBold = ({content, size = Size20*0.8}) => {
@@ -48,7 +48,6 @@ export const TextIcon = ({
 const Style = StyleSheet.create({
     textSimple : {
         color: Colors[Theme][5],
-        fontSize: Size20,
         ...FontRegular
     },
     textBold : {

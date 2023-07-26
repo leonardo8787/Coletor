@@ -2,6 +2,12 @@ import {StyleSheet} from 'react-native';
 import {Colors, Theme} from '../../../constants/setting';
 
 export const Styles = StyleSheet.create({
+    cardIndex: {
+        zIndex: 3,
+    },
+    listIndex: {
+        zIndex: 2,
+    },
     default: {
         top: 0,
         left: 0,
@@ -9,7 +15,6 @@ export const Styles = StyleSheet.create({
         bottom: 0,
         position: "absolute",
         elevation: 1,
-        zIndex: 1,
         alignItems:"center",
         justifyContent: "center"
     },
@@ -25,7 +30,6 @@ export const Styles = StyleSheet.create({
     card: {
         position: "absolute",
         elevation: 1,
-        zIndex: 1,
         width: "80%",
         //height: Height * 0.4,
         backgroundColor: Colors[Theme][1],

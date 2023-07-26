@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import MapView, {Marker, Circle} from 'react-native-maps';
 import { View } from 'react-native';
 import { styles, customMapStyle } from './style';
@@ -11,6 +11,7 @@ import { Loading } from '../../components/loading';
 import { Error } from '../../components/error';
 import { ButtonIcon } from '../../components/buttons';
 import { RecyclableList } from './components/recyclable_list';
+import { ColetorContext } from "../../contexts/coletor/context";
 
 function Map() {
 
@@ -20,6 +21,8 @@ function Map() {
     latitudeDelta: 0.015,
     longitudeDelta: 0.0121
   });
+
+  const {coletorState, coletorDispach}            = useContext(ColetorContext)
 
   const [recyclable, setRecyclable]               = useState({});
   const [error, setError]                         = useState(false);
@@ -43,19 +46,29 @@ function Map() {
     // });
   }
 
+  function callbackError(error){
+    setError(error);
+  }
+
+  function showRecyclable(current){
+    setCurrentRecyclable(current);
+    setAddRecyclable(true);
+  }
+
   useEffect(() => {
     userLocation();
     GetRecyclable(setRecyclable);
   }, []);
 
-  useEffect(() => {
-    console.log(typeof recyclable);
-    console.log(recyclable);
-  }, [recyclable]);
+  // useEffect(() => {
+  //   console.log("Collector: ->> ", coletorState);
+  // }, [coletorState]);
 
-  useEffect(() => {
-    //setAddRecyclable(true);
-  }, [addRecyclable]);
+  // useEffect(() => {
+  //   //console.log(typeof recyclable);
+  //   console.log("Reciclaveis ->> ", recyclable);
+  // }, [recyclable]);
+
 
 
   return (
@@ -63,8 +76,24 @@ function Map() {
 
         {loading && <Loading />}
         {error && <Error error={error} closeFunc={()=>setError(false)}/>}
-        {addRecyclable && <RecyclableCard data={currentRecyclable} closeCard={()=>setAddRecyclable(false)} setloading={(val = true)=>setLoading(val)}/>}
-        {listRecyclable && <RecyclableList datas={recyclable} closeList={()=>setListRecyclable(false)} setloading={(val = true)=>setLoading(val)}/>}
+        {addRecyclable && 
+          <RecyclableCard 
+            data={currentRecyclable} 
+            collector={coletorState}
+            callbackError={callbackError} 
+            closeCard={()=>setAddRecyclable(false)} 
+            setloading={(val = true)=>setLoading(val)}
+          />
+        }
+
+        {listRecyclable && 
+          <RecyclableList 
+            datas={recyclable} 
+            collector={coletorState}
+            showRecyclable = {showRecyclable}
+            closeList={()=>setListRecyclable(false)} 
+          />
+        }
 
         <MapView 
           style={styles.map} 
@@ -90,12 +119,14 @@ function Map() {
 
           {
             recyclable && Object.entries(recyclable).map(([index, item]) => {
+              if(item["status"] == "done") return;
+
               return (
                 <Marker
                   coordinate={{latitude: item["address"].latitude, longitude: item["address"].longitude}}
                   key={index}
                   onPress={()=>{
-                    if(item["status"] == "pending"){
+                    if(item["status"] == "pending" || item.collector.id == coletorState.id){
                       setCurrentRecyclable({
                         id: index,
                         ...item
@@ -112,7 +143,7 @@ function Map() {
                 >
                   <SimpleIcon 
                     name={item["status"] == "pending" ? 'map-marker-account' : 'map-marker-alert'} 
-                    size={40} color={item["status"] == "pending" ? '#0bbae3' : '#faa05e'} 
+                    size={40} color={item["status"] == "pending" ? '#0bbae3' : item.collector.id == coletorState.id ? '#179a02' : '#faa05e' } 
                   />
 
                 </Marker>
