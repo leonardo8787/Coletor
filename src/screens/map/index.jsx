@@ -91,6 +91,9 @@ function Map() {
             datas={recyclable} 
             collector={coletorState}
             showRecyclable = {showRecyclable}
+            currentLocation={location}
+            setError={setError}
+            setLoading={setLoading}
             closeList={()=>setListRecyclable(false)} 
           />
         }
