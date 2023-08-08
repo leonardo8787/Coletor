@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, TextInput, FlatList, TouchableOpacity, Text } from 'react-native';
+import { View, TextInput, FlatList, TouchableOpacity, Text, Image } from 'react-native';
 import { collection, onSnapshot, addDoc, getFirestore, firebaseApp, Timestamp } from "firebase/firestore";
 import { ColetorContext } from "../../contexts/coletor/context";
 import { SizedBox } from 'sizedbox';
 import { styles } from "./style";
+import { useNavigation } from "@react-navigation/native";
 
 const firestore = getFirestore(firebaseApp);
 
@@ -15,17 +16,20 @@ const formatTimestamp = (timestamp) => {
   return `${hours}:${minutes}`;
 };
 
-export function ChatScreen() {
+export function ChatScreen({ route }) {
   const { coletorState, coletorDispach } = useContext(ColetorContext);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const navigation = useNavigation();
+
+  const { userId, userPhotoUrl, userName } = route.params;
 
   useEffect(() => {
     const messagesRef = collection(firestore, 'messages');
     const unsubscribe = onSnapshot(messagesRef, (snapshot) => {
       const messageList = snapshot.docs
         .map((doc) => ({ ...doc.data(), id: doc.id }))
-        .filter((message) => message.senderId === coletorState.id || message.recipientId === coletorState.id)
+        .filter((message) => (message.senderId === coletorState.id && message.recipientId === userId) || (message.recipientId === coletorState.id && message.senderId === userId) )
         .sort((a, b) => {
           if (a.timestamp && b.timestamp) {
             return a.timestamp.toMillis() - b.timestamp.toMillis();
@@ -52,7 +56,7 @@ export function ChatScreen() {
     const newMessage = {
       text: message,
       senderId: user,
-      recipientId: '5fIkyWhXvJVF15w2GlhYJMDiIY43',
+      recipientId: userId,
       timestamp: Timestamp.fromDate(new Date()), 
     };
 
@@ -79,6 +83,8 @@ export function ChatScreen() {
   return (
     <View style={styles.container}>
       <SizedBox vertical={20} />
+      <Image source={{ uri: userPhotoUrl }}/>
+      <Text>{userName}</Text>
       <FlatList
         data={messages}
         renderItem={renderMessage}

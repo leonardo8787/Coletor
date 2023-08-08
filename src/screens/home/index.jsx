@@ -23,6 +23,8 @@ import { useNavigation } from '@react-navigation/native';
 import { setDoc, getDoc, collection, onSnapshot, addDoc, getFirestore, firebaseApp, Firestore } from "firebase/firestore";
 import { CardHome } from "../address/components/card";
 
+import { getDatabase, push, ref, get } from "firebase/database";
+
 export function Home({}) {
   const navigation = useNavigation();
   const firestore = getFirestore(firebaseApp);
@@ -32,6 +34,51 @@ export function Home({}) {
   const [tarefas, setTarefas]            = useState([]);
   const quantidadeTarefas = tarefas.length;
   const tipos = tarefas.map((tarefa) => tarefa.tipo);
+  const database = getDatabase(firebaseApp);
+  const [collectorData, setCollectorData] = useState([]);
+  const yourCollectorId =  coletorState.id;
+
+  useEffect(() => {
+    const infoRef = ref(database, 'recyclable/');
+  
+    get(infoRef).then(snapshot => {
+      const data = snapshot.val();
+      if (data) {
+        const collectorArray = [];
+        for (const id in data) {
+          const collectorInfo = data[id];
+          if (collectorInfo && collectorInfo.collector && collectorInfo.collector.id === yourCollectorId) {
+            const collector = collectorInfo.collector;
+            const collectorData = {
+              id: collector.id,
+              name: collector.name,
+              photoUrl: collector.photoUrl,
+              address: collectorInfo.address,
+              bags: collectorInfo.bags,
+              boxes: collectorInfo.boxes,
+              donor: {
+                id: collectorInfo.donor.id,
+                name: collectorInfo.donor.name,
+                photoUrl: collectorInfo.donor.photoUrl
+              },
+              observation: collectorInfo.observation,
+              status: collectorInfo.status,
+              times: collectorInfo.times,
+              types: collectorInfo.types,
+              weekDays: collectorInfo.weekDays,
+              weight: collectorInfo.weight
+            };
+            collectorArray.push(collectorData);
+          }
+        }
+        setCollectorData(collectorArray);
+      }
+    })
+    .catch(error => {
+      console.error('Erro ao ler os dados:', error);
+    });
+  }, [yourCollectorId]);
+  
 
   const tokenizeString=(string) => {
     const tokens = String(string).replace(/([a-z])([A-Z])/g, '$1,$2').split(',');
@@ -59,52 +106,52 @@ export function Home({}) {
     return () => unsubscribe();
   }, []);
 
-  const quantidadeTipoA = tarefas.filter((tarefa) => tarefa.tipo.includes('Plástico')).length;
-  const quantidadeTipoB = tarefas.filter((tarefa) => tarefa.tipo.includes('Metal')).length;
-  const quantidadeTipoC = tarefas.filter((tarefa) => tarefa.tipo.includes('Eletrônico')).length;
-  const quantidadeTipoD = tarefas.filter((tarefa) => tarefa.tipo.includes('Papel')).length;
-  const quantidadeTipoE = tarefas.filter((tarefa) => tarefa.tipo.includes('Óleo')).length;
-  const quantidadeTipoF = tarefas.filter((tarefa) => tarefa.tipo.includes('Vidro')).length;
+  const quantidadetypesA = collectorData.filter((tarefa) => tarefa.types.includes('Plástico')).length;
+  const quantidadetypesB = collectorData.filter((tarefa) => tarefa.types.includes('Metal')).length;
+  const quantidadetypesC = collectorData.filter((tarefa) => tarefa.types.includes('Eletrônico')).length;
+  const quantidadetypesD = collectorData.filter((tarefa) => tarefa.types.includes('Papel')).length;
+  const quantidadetypesE = collectorData.filter((tarefa) => tarefa.types.includes('Óleo')).length;
+  const quantidadetypesF = collectorData.filter((tarefa) => tarefa.types.includes('Vidro')).length;
 
   const data2 = [
     {
       name: 'Metal',
-      population: quantidadeTipoB,
+      population: quantidadetypesB,
       color: '#297AB1',
       legendFontColor: '#7F7F7F',
       legendFontSize: 15,
     },
     {
       name: 'Plástico',
-      population: quantidadeTipoA,
+      population: quantidadetypesA,
       color: '#F5A623',
       legendFontColor: '#7F7F7F',
       legendFontSize: 15,
     },
     {
       name: 'Eletrônico',
-      population: quantidadeTipoC,
+      population: quantidadetypesC,
       color: '#D33F49',
       legendFontColor: '#7F7F7F',
       legendFontSize: 15,
     },
     {
       name: 'Óleo',
-      population: quantidadeTipoE,
+      population: quantidadetypesE,
       color: 'green',
       legendFontColor: '#7F7F7F',
       legendFontSize: 15,
     },
     {
       name: 'Vidro',
-      population: quantidadeTipoF,
+      population: quantidadetypesF,
       color: 'pink',
       legendFontColor: '#7F7F7F',
       legendFontSize: 15,
     },
     {
       name: 'Papel',
-      population: quantidadeTipoD,
+      population: quantidadetypesD,
       color: 'brown',
       legendFontColor: '#7F7F7F',
       legendFontSize: 15,
@@ -197,10 +244,10 @@ export function Home({}) {
               <Text style={{ color: Colors[Theme][2], textAlign: 'left', padding: 20, fontWeight: 'bold' }}>Histórico</Text>
             </View>
             <ScrollView horizontal>
-              {tarefas.map((index) => (
+              {collectorData.map((index) => (
                 <View style={[styles.containerEdit, { marginRight: 50 }]}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <CardHome tipo={index.tipo} endereco={index.endereco} peso={index.peso} sacolas={index.sacolas} caixas={index.caixas} key={index} />
+                    <CardHome tipo={index.type} endereco={index.address.name} peso={index.weight} sacolas={index.bags} caixas={index.boxes} foto={index.donor.photoUrl} nome={index.donor.name} id={index.donor.id} key={index} />
                   </View>
                 </View>
               ))}

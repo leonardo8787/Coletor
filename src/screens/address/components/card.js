@@ -1,11 +1,12 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors, Theme } from "../../../constants/setting";
 import { Width, Height, Size20, Size50, FontBold, FontRegular } from "../../../constants/scales";
 import { ButtonIcon } from "../../../components/buttons";
 import { TextIcon, TextSimple } from "../../../components/texts";
 import { ImageCircleDefault } from "../../../components/images";
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-// import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export const AddressCard = ({address, editFn, removeFn}) => {
 
@@ -99,70 +100,47 @@ export const AddressCard2 = ({address, editFn, removeFn}) => {
     );
 }
 
-export const CardHome = ({ tipo, caixas, coleta, endereco, observacao, peso, sacolas }) => {
-    return (
-      <View style={Style.container}>
-        <View style={Style.row}>
-        <Text style={Style.textTitle}>{tipo}</Text>
-          <ImageCircleDefault
-            img={{ uri: 'https://www.florence.edu.br/wp-content/uploads/2022/08/Imagem-Materia_Dia-do-Cachorro-600x400.png' }}
-            size={Size50 * 1.5}
-          />
-        </View>
-  
-        <View style={Style.row2}> 
-        <FontAwesomeIcon name="cube" size={15} color="black" />
-        <TextIcon
-          color={Colors[Theme][4]}
-          size={Size20 * 0.8}
-          space={15}
-        >
-          {caixas}.
-        </TextIcon>
-        </View>
-        <View style={Style.row2}> 
-        <FontAwesomeIcon name="shopping-bag" size={15} color="black" />
-        <TextIcon
-          color={Colors[Theme][4]}
-          size={Size20 * 0.8}
-          space={15}
-        >
-          {sacolas}.
-        </TextIcon>
-        </View>
-        <View style={Style.row2}> 
-        <FontAwesomeIcon name="balance-scale" size={15} color="black" />
-        <TextIcon
-          color={Colors[Theme][4]}
-          size={Size20 * 0.8}
-          space={15}
-        >
-          {peso}.
-        </TextIcon>
-        </View>
-        <TextIcon
-          icon={"home"}
-          color={Colors[Theme][4]}
-          size={Size20 * 0.8}
-          space={15}
-        >
-          {endereco}.
-        </TextIcon>
-        <View style={Style.row2}> 
-        <FontAwesomeIcon name="circle" size={15} color="black" />
-        <TextIcon
-          color={Colors[Theme][4]}
-          size={Size20 * 0.8}
-          space={15}
-        >
-          {"Status: Em andamento"}.
-        </TextIcon>
-        </View>
-      </View>
+export const CardHome = ({ tipo, caixas, coleta, endereco, observacao, peso, sacolas, user, foto, nome, id }) => {
+  const navigation = useNavigation();
+      return (
+        <View style={Style.container}>
+          <View style={Style.row}>
+            <View style={Style.container2}>
+              <TextIcon
+                  icon={"map-marker"}
+                  color={Colors[Theme][4]}
+                  size={Size20*0.8}
+                  space={15}
+              >
+                  {endereco}.
+              </TextIcon>
+              <TextIcon
+                  icon={"check"}
+                  color={Colors[Theme][4]}
+                  size={Size20*0.8}
+                  space={15}
+              >
+                  {"Andamento"}.
+              </TextIcon>
+              <View style={Style.buttonGreey}>
+                <TouchableOpacity style={Style.button2} onPress={() => navigation.navigate('Chat', { userId: id, userPhotoUrl: foto, userName: nome })}>
+                  <MaterialCommunityIcons name="chat" size={25} color="white" />
+                  <Text style={Style.text}>Chat</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View>
+            <ImageCircleDefault
+             img={{ uri: foto }}
+             size={Size50 * 1.5}
+           />
+           <Text>{nome}</Text>
+            </View>
 
+          </View>
+        </View>
     );
-  }
-  
+}
 
 const Style = StyleSheet.create({
     row:{
@@ -171,11 +149,10 @@ const Style = StyleSheet.create({
         justifyContent:"space-between",        
     },
 
-    row2:{
-        display: "flex",
-        flexDirection:"row",        
-        // justifyContent:"space-between",        
-    },
+    row2: {
+      flexDirection: "row",
+      justifyContent: "center",
+    },  
 
     textTitle : {
         marginBottom: 15,
@@ -184,9 +161,12 @@ const Style = StyleSheet.create({
         ...FontBold
     },
 
-    textContent : {
-
-    },
+    text : {
+      marginBottom: 0.00001,
+      color: 'white',
+      fontSize: Size20 * 0.85,
+      ...FontBold
+  },
 
     container:{  
         elevation: 3,
@@ -198,5 +178,56 @@ const Style = StyleSheet.create({
         backgroundColor: Colors[Theme][1],
         //alignItems:"center",
         marginBottom: 15
+    },
+
+    container2:{  
+      // elevation: 3,
+      zIndex: 1,
+      justifyContent: "center",
+      width: Width * 0.5,
+      // borderRadius: 10,
+      padding: 10,
+      backgroundColor: Colors[Theme][1],
+      //alignItems:"center",
+      marginBottom: 15
+  },
+
+    containerButtonClearandEdit: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'row', // Para alinhar os botões lado a lado
+    },
+    button2: {
+      padding: 15,
+      borderRadius: 8,
+      marginBottom: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 200,
+      flexDirection: "row",
+    },
+    buttonText: {
+      color: '#FFFFFF',
+      fontSize: 18,
+      fontWeight: 'bold',
+    },
+    buttonGreey: {
+      backgroundColor: '#CCCCCC',
+      borderRadius: 20,
+      paddingVertical: 0.1,
+      paddingHorizontal: 45,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '45%',
+    },
+    buttonRed: {
+      backgroundColor: '#FF3E3E',
+      borderRadius: 20,
+      paddingVertical: 10,
+      paddingHorizontal: 16,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '35%',
     },
 })
