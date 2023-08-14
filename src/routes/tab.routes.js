@@ -46,14 +46,6 @@ function TabsRoutes() {
         }}
       /> 
       <Tab.Screen 
-        name="Chat" 
-        component={ChatScreen} 
-        options={{
-          title: "Chat",
-          tabBarIcon: ({ color }) => ( <SimpleIcon name="chat" color={color}  size={Size28} />),
-        }}
-      /> 
-      <Tab.Screen 
         name="Profile" 
         component={Profile} 
         options={{

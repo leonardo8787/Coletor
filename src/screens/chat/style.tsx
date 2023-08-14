@@ -6,6 +6,10 @@ export const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     padding: 16,
   },
+  container2: {
+    flex: 1,
+    backgroundColor: 'green',
+  },
   messagesContainer: {
     paddingTop: 8,
     paddingBottom: 16,
