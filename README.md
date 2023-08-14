@@ -11,7 +11,8 @@ Essa iniciativa conjunta entre as duas instituições de ensino busca não apena
 Com esse software de doação de lixo reciclável, espera-se fortalecer as ações de reciclagem, engajando a comunidade e as empresas na causa ambiental. Ao unir esforços e conhecimentos, a parceria USP-CEFET-MG busca criar soluções que contribuam para um futuro mais sustentável, onde a reciclagem e o reaproveitamento de materiais sejam práticas comuns e essenciais para a preservação do meio ambiente. 
 
 ## Primeiros passos
-![](assets/readmeIMG/download.png)
+![gitimage](https://github.com/leonardo8787/Coletor/assets/78708394/793c5aa2-ff1e-47cd-8a47-5de12706d279)
+
 
 Para configurar o ambiente, é necessário fazer o download do projeto. Você pode optar por baixar o zip do projeto de forma direta, como mostrado na marcação 2 da imagem acima, ou clonar o repositório utilizando o seguinte comando, com a URL destacada na marcação 1 da imagem acima:
 
