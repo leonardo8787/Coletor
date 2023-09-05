@@ -93,7 +93,7 @@ export const RecyclableCard = ({ data, collector, closeCard, setloading, callbac
                 </View>
 
                 <TextSimple content={data.types}/>
-                <TextSimple content={data.times}/>
+                <TextSimple content={"horários: "+data.times+"h"}/>
               
                 <View style={{...Styles.row, marginTop:20}}>
                     <ButtonDefault 
