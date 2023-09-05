@@ -213,7 +213,7 @@ const Style = StyleSheet.create({
       fontWeight: 'bold',
     },
     buttonGreey: {
-      backgroundColor: '#CCCCCC',
+      backgroundColor: Colors[Theme][2],
       borderRadius: 20,
       paddingVertical: 0.1,
       paddingHorizontal: 45,

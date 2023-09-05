@@ -27,7 +27,7 @@ export const RecyclableList = ({ datas, collector, closeList, showRecyclable, cu
             domain = false;
             if(item.collector.id == collector.id){
                 TokenizarStringEmIntervalos(item.times).forEach((time) => {
-                    if (time.inicio < hour && time.fim > hour) {
+                    if (time.inicio < hour && time.fim > hour || true) {
                         domain = true;
                         setContTime((old) => old + 1);
                         setKilo((old) => old + TokenizaConverterParaKg(item.weight));

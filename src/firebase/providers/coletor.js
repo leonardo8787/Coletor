@@ -19,7 +19,7 @@ async function Sign (data, dispach, callback) {
     delete data.id;
     delete data.logged;
     try {
-        await setDoc(doc(Firestore, "coletor", user.uid), data);
+        await setDoc(doc(Firestore, "collector", user.uid), data);
         dispach({type: Types.SETLOGGED, payload: {id: user.uid}});          
       } catch (err) {
         const error = {
@@ -61,7 +61,7 @@ async function UpDate(data, dispach, callback) {
   delete data.id;
   delete data.logged;
 
-  setDoc(doc(Firestore, "coletor", id), data).then(()=>{
+  setDoc(doc(Firestore, "collector", id), data).then(()=>{
     dispach({type: Types.SETUPDATE, payload: data});  
     callback(false, null);
   }).catch((err)=>{
@@ -74,7 +74,7 @@ async function UpDate(data, dispach, callback) {
 }
 
 async function UpDateTokenNotification(id,token, callback) {
-  updateDoc(doc(Firestore, "coletor", id), {pushTokenNotification: token}
+  updateDoc(doc(Firestore, "collector", id), {pushTokenNotification: token}
   ).catch((err)=>{
     const error = {
       title: "Falha ao atualizar dados",
@@ -85,7 +85,7 @@ async function UpDateTokenNotification(id,token, callback) {
 }
 
 async function UpDateNotificationList(id, notification, callback) {
-  updateDoc(doc(Firestore, "coletor", id), {notifications: arrayUnion(notification)}
+  updateDoc(doc(Firestore, "collector", id), {notifications: arrayUnion(notification)}
   ).catch((err)=>{
     const error = {
       title: "Falha ao atualizar dados",
@@ -99,7 +99,7 @@ async function Login(data, dispach, callback) {
   signInWithEmailAndPassword(Auth, data.email, data.pass)
   .then(async (userCredential) => {
     const ref  = userCredential.user;
-    const user = await getDoc(doc(Firestore, 'coletor', ref.uid));
+    const user = await getDoc(doc(Firestore, 'collector', ref.uid));
     dispach({type: Types.SETLOGGED, payload: {...user.data(), id: ref.uid}});    
   }).catch((err)=>{
     const error = {

@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View, Button, alert } from "react-native";
 import { useContext, useState, useEffect } from "react";
 import { SizedBox } from 'sizedbox';
 
@@ -13,6 +13,8 @@ import * as Types from "../../contexts/coletor/types";
 import { Loading } from "../../components/loading";
 import { Error } from "../../components/error";
 import { Styles } from "./style"
+import { firebase } from "@react-native-firebase/messaging";
+import auth from '@react-native-firebase/auth';
 
 export function Login() {
 
@@ -29,10 +31,10 @@ export function Login() {
 
   const img = require("../../../assets/images/googleLogo.png");
 
-  function openScreen(){
-    coletorDispach({type:Types.SETSIGNOUT});
-    navigation.navigate('Sign');
-  }
+  // function openScreen(){
+  //   coletorDispach({type:Types.SETSIGNOUT});
+  //   navigation.navigate('Sign');
+  // }
 
   function validation(){
     let valid = false;
@@ -68,6 +70,32 @@ export function Login() {
     coletorDispach({type: type, payload: value});
   }
 
+  // function recoverPassword() {
+  
+  //     firebase.auth()
+  //     .sendPasswordResetEmail(coletorState.email)
+  //     .then(() => {
+  //       // Password reset email sent successfully
+  //       alert('Email enviado com sucesso');
+  //     })
+  //     .catch((error) => {
+  //       // Handle errors here
+  //       alert(getErrorMessage(error));
+  //     });
+  // }
+  
+  // function getErrorMessage(error) {
+  //   switch (error.code) {
+  //     case 'auth/user-not-found':
+  //       return 'User not found. Please check your email.';
+  //     case 'auth/invalid-email':
+  //       return 'Invalid email address. Please enter a valid email.';
+  //     default:
+  //       return 'An error occurred. Please try again later.';
+  //   }
+  // }
+  
+
   return (
     <View style={Styles.container}>
       {error && <Error error={error} closeFunc={() => setError(false)}/>}
@@ -96,7 +124,12 @@ export function Login() {
               cb = {setHide}
             />  
 
-            <SizedBox vertical={10} />
+            <SizedBox vertical={5} />
+            {/* <Button
+              title="Mudar senha"
+              onPress={() => recoverPassword()}
+            /> */}
+            <SizedBox vertical={5} />
 
             <ButtonDefault
               title={"Entrar"}
@@ -105,16 +138,6 @@ export function Login() {
               textSize={Size20}
               width={0.7}
               fun={login}
-            />
-            <SizedBox vertical={5} />
-            <ButtonDefault
-              title={"Cadastrar"}
-              color={Colors[Theme][5]}
-              textColor={Colors[Theme][7]}
-              textSize={Size20}
-              width={0.7}
-              opacity={0.7}
-              fun={openScreen}
             />
             <SizedBox vertical={Size20} />
             <Text style={{marginBottom: Size16, fontSize: Size16, color: Colors[Theme][5], ...FontRegular}}> Ou, fazer login com </Text>

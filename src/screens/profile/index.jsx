@@ -1,4 +1,4 @@
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView , Button, Alert} from "react-native";
 import { useContext, useState, useEffect } from "react";
 
 import { InputIcon,InputIconMask } from "../../components/inputs";
@@ -18,6 +18,8 @@ import * as Errors from "../../constants/erros";
 import * as Validation from "../../utils/validation";
 import { RegisterAddress } from "../address";
 import { AddressCard } from "../address/components/card";
+// import { setDoc, getDoc, collection, onSnapshot, addDoc, getFirestore, firebaseApp, Firestore } from "firebase/firestore";
+import auth from '@react-native-firebase/auth';
 
 export function Profile() {
   const {coletorState, coletorDispach} = useContext(ColetorContext)
@@ -72,6 +74,24 @@ export function Profile() {
       coletorDispach({type: Types.UPDATE, data: {...coletorState, photoUrl: error}, dispatch: coletorDispach, cb:updateCB});
     }
   }
+
+  const [resetEmailSent, setResetEmailSent] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handlePasswordReset = () => {
+    auth()
+      .sendPasswordResetEmail(coletorState.email)
+      .then(() => {
+        setResetEmailSent(true);
+        setErrorMessage('');
+        Alert.alert('Redefinição de senha enviada', 'Verifique sua caixa de entrada para redefinir sua senha.');
+      })
+      .catch(error => {
+        setResetEmailSent(false);
+        setErrorMessage('Erro ao enviar o e-mail de redefinição de senha.');
+        console.error('Erro ao enviar o e-mail de redefinição de senha', error);
+      });
+  };
 
   // Edit Profile Functions
   function editProfile(){
@@ -158,15 +178,6 @@ export function Profile() {
           bgColor={Colors[Theme][0]}
         />
 
-        {/* <View style={Styles.row}>
-          <ButtonIcon 
-            btn = {true}
-            name={ Theme == "dark" ? 'lightbulb-on-outline' : 'lightbulb-off-outline'}
-            color={Colors[Theme][5]}
-            margin={22}
-            size={Size28}
-            fun={ChangeTheme}
-          /> */}
           <ButtonIcon 
             btn = {true}
             name={"square-edit-outline"}
@@ -175,7 +186,6 @@ export function Profile() {
             size={Size28}
             fun={editProfile}
           />
-        {/* </View> */}
 
         <View style={{...Styles.containerEdit, opacity: editProf ? 1 : 0.6}}>
           <InputIcon
@@ -198,6 +208,16 @@ export function Profile() {
             mask={Mask.phoneMask}
             errorMsg={phoneErr}
           />
+        {editProf && (
+          <View>
+            <Button
+              title="Redefinir Senha"
+              onPress={handlePasswordReset}
+              color={Colors[Theme][2]}
+            />
+            {errorMessage !== "" && <Text>{errorMessage}</Text>}
+          </View>
+        )}
 
           {editProf && <ButtonDefault
             title={"Confirmar"}
