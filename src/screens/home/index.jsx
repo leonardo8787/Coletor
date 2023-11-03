@@ -244,8 +244,8 @@ export function Home({}) {
               <Text style={{ color: Colors[Theme][2], textAlign: 'left', padding: 20, fontWeight: 'bold' }}>Histórico</Text>
             </View>
             <ScrollView horizontal>
-              {collectorData.map((index) => (
-                <View style={[styles.containerEdit, { marginRight: 50 }]}>
+              {collectorData.map((index, key) => (
+                <View style={[styles.containerEdit, { marginRight: 50 }]} key={key} >
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <CardHome tipo={index.type} endereco={index.address.name} peso={index.weight} sacolas={index.bags} caixas={index.boxes} foto={index.donor.photoUrl} nome={index.donor.name} id={index.donor.id} key={index} />
                   </View>
